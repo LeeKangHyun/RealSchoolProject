@@ -9,6 +9,7 @@ import IosButton from '../Component/IosButton';
 import ModalAdd from '../Component/modal/ModalAdd';
 
 import Sensor from '../Component/ble/SensorComponent';
+import BlueTooth from '../Component/ble/Ble';
 
 import { createRfid, changeRfid, removeRfid } from '../Redux/rfid/action';
 import { alert_modal } from '../Redux/modal/action';
@@ -48,11 +49,15 @@ class Main extends Component {
           />
         </View>
         
-        <View>
-          <Sensor />
+        <View style={{
+          flex: 3
+        }}>
+          <ScrollView>
+            <BlueTooth />
+          </ScrollView>
         </View>
         
-        <View style={{flex: 8}}>
+        <View style={{flex: 6}}>
           <ScrollView>
             <List
               onChangeItem={changeRfid}

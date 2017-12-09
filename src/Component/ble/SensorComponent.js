@@ -4,8 +4,9 @@ import { BleManager } from 'react-native-ble-plx';
 
 class SensorsComponent extends Component {
   
-  constructor(props) {
-    super(props)
+  constructor() {
+    super();
+    
     this.manager = new BleManager();
     this.state = { info: "", values: {} };
     this.prefixUUID = "f000aa";

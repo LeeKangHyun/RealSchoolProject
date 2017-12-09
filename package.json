@@ -19,6 +19,7 @@
   "dependencies": {
     "react": "16.0.0",
     "react-native": "0.50.3",
+    "react-native-ble-manager": "^6.2.4",
     "react-native-ble-plx": "^0.7.0",
     "react-native-check-box": "^2.0.2",
     "react-native-modal": "^4.1.1",
