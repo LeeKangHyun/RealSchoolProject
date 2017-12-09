@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import Dimensions from 'Dimensions';
 import BleManager from 'react-native-ble-manager';
+import {Buffer} from 'buffer';
 
 const window = Dimensions.get('window');
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -65,15 +66,26 @@ export default class BlueTooth extends Component {
         }
       });
     }
-    
+  }
+  
+  makeGuid() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+      s4() + '-' + s4() + s4() + s4();
   }
   
   handleAppStateChange(nextAppState) {
     if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-      console.log('App has come to the foreground!')
+      console.log('포 그라운드 틀어짐');
       BleManager.getConnectedPeripherals([]).then((peripheralsArray) => {
-        console.log('Connected peripherals: ' + peripheralsArray.length);
+        console.log('연결된 주변 기기: ' + peripheralsArray.length);
       });
+    } else {
+      console.log('백 그라운드 틀어짐');
     }
     this.setState({appState: nextAppState});
   }
@@ -93,22 +105,22 @@ export default class BlueTooth extends Component {
       peripherals.set(peripheral.id, peripheral);
       this.setState({peripherals});
     }
-    console.log('Disconnected from ' + data.peripheral);
+    console.log('연결 해제 ' + data.peripheral);
   }
   
   handleUpdateValueForCharacteristic(data) {
-    console.log('Received data from ' + data.peripheral + ' characteristic ' + data.characteristic, data.value);
+    console.log('데이터 수신 ' + data.peripheral + ' characteristic ' + data.characteristic, data.value);
   }
   
   handleStopScan() {
-    console.log('Scan is stopped');
+    console.log('스캔 중지');
     this.setState({ scanning: false });
   }
   
   startScan() {
     if (!this.state.scanning) {
       BleManager.scan([], 3, true).then((results) => {
-        console.log('Scanning...');
+        console.log('스캔중!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
         this.setState({scanning:true});
       });
     }
@@ -139,7 +151,7 @@ export default class BlueTooth extends Component {
           console.log('Connected to ' + peripheral.id);
           
           
-          this.setTimeout(() => {
+          setTimeout(() => {
             
             /* Test read current RSSI value
             BleManager.retrieveServices(peripheral.id).then((peripheralData) => {
@@ -157,10 +169,10 @@ export default class BlueTooth extends Component {
               var bakeCharacteristic = '13333333-3333-3333-3333-333333330003';
               var crustCharacteristic = '13333333-3333-3333-3333-333333330001';
               
-              this.setTimeout(() => {
+              setTimeout(() => {
                 BleManager.startNotification(peripheral.id, service, bakeCharacteristic).then(() => {
                   console.log('Started notification on ' + peripheral.id);
-                  this.setTimeout(() => {
+                  setTimeout(() => {
                     BleManager.write(peripheral.id, service, crustCharacteristic, [0]).then(() => {
                       console.log('Writed NORMAL crust');
                       BleManager.write(peripheral.id, service, bakeCharacteristic, [1,95]).then(() => {
@@ -191,6 +203,40 @@ export default class BlueTooth extends Component {
     }
   }
   
+  /*test(peripheral) {
+    if (peripheral){
+      if (peripheral.connected) {
+        BleManager.disconnect(peripheral.id);
+      } else {
+        BleManager.connect(peripheral.id)
+        .then(() => {
+          let peripherals = this.state.peripherals;
+          let p = peripherals.get(peripheral.id);
+          if (p) {
+            p.connected = true;
+            peripherals.set(peripheral.id, p);
+            this.setState({peripherals});
+          }
+          console.log('기기 연결 ... ' + peripheral.id);
+          setTimeout(() => {
+            BleManager.retrieveServices(peripheral.id)
+            .then((peripheralInfo) => {
+              console.log('연결 정보');
+              console.log(peripheralInfo);
+              setTimeout(() => {
+                console.log('time 200');
+              }, 200);
+            }).catch(err => {
+              console.log(`retrieveServices err ${err}`)
+            })
+          }, 900)
+        }).catch((err) => {
+          console.log(`연결오류 ${err}`);
+        })
+      }
+    }
+  }*/
+  
   render() {
     const list = Array.from(this.state.peripherals.values());
     const dataSource = ds.cloneWithRows(list);
@@ -198,12 +244,12 @@ export default class BlueTooth extends Component {
     return (
       <View style={styles.container}>
         <TouchableHighlight style={{marginTop: 40,margin: 20, padding:20, backgroundColor:'#ccc'}} onPress={() => this.startScan() }>
-          <Text>Scan Bluetooth ({this.state.scanning ? 'on' : 'off'})</Text>
+          <Text>블루투스 스캔중 ({this.state.scanning ? '실행 중' : '꺼짐'})</Text>
         </TouchableHighlight>
         <ScrollView style={styles.scroll}>
-          {(list.length == 0) &&
-          <View style={{flex:1, margin: 20}}>
-              <Text style={{textAlign: 'center'}}>No peripherals</Text>
+          {(list.length === 0) &&
+            <View style={{flex:1, margin: 20}}>
+              <Text style={{textAlign: 'center'}}>주변 기기 없음</Text>
             </View>
           }
           <ListView

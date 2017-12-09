@@ -4,3 +4,10 @@ export function alert_modal(on = false) {
     on: on
   }
 }
+
+export function add_modal(on = false) {
+  return {
+    type: 'MODAL_ADD',
+    on: on
+  }
+}

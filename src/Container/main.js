@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, StyleSheet, } from 'react-native';
+import { View, ScrollView, StyleSheet, Vibration, } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -12,7 +12,7 @@ import Sensor from '../Component/ble/SensorComponent';
 import BlueTooth from '../Component/ble/Ble';
 
 import { createRfid, changeRfid, removeRfid } from '../Redux/rfid/action';
-import { alert_modal } from '../Redux/modal/action';
+import { alert_modal, add_modal } from '../Redux/modal/action';
 
 const styleSheet = StyleSheet.create({
   container: {
@@ -27,7 +27,9 @@ class Main extends Component {
       changeRfid,
       removeRfid,
       alert,
+      add,
       alert_modal,
+      add_modal,
     } = this.props;
     return (
       <View style={styleSheet.container}>
@@ -44,20 +46,19 @@ class Main extends Component {
             title={"추가"}
             color={"#000"}
             onPress={() => {
-              alert_modal(true)
+              // Vibration.vibrate([100], true);
+              add_modal(true);
             }}
           />
         </View>
         
         <View style={{
-          flex: 3
+          flex: 5
         }}>
-          <ScrollView>
-            <BlueTooth />
-          </ScrollView>
+          <BlueTooth />
         </View>
         
-        <View style={{flex: 6}}>
+        <View style={{flex: 4}}>
           <ScrollView>
             <List
               onChangeItem={changeRfid}
@@ -66,7 +67,7 @@ class Main extends Component {
             />
           </ScrollView>
         </View>
-        <ModalAdd visible={alert.on}/>
+        <ModalAdd visible={add.on}/>
       </View>
     )
   }
@@ -74,6 +75,7 @@ class Main extends Component {
 
 const mapStateToProps = (state) => ({
   rfid: state.rfid,
+  add: state.modal.add,
   alert: state.modal.alert,
 });
 
@@ -82,6 +84,7 @@ const mapDispatchToProps = dispatch => {
     createRfid,
     changeRfid,
     removeRfid,
+    add_modal,
     alert_modal,
   }, dispatch)
 };

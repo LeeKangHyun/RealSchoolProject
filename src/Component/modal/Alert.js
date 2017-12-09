@@ -8,51 +8,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import NativeModal from 'react-native-modal';
 
-import Title from '../Title';
-import { add_modal } from '../../Redux/modal/action';
-import { createRfid } from '../../Redux/rfid/action';
-import IosButton from '../IosButton';
-
-class ModalAdd extends Component {
-  static defaultProps = {
-    visible: false
-  };
-  
-  constructor(props) {
-    super(props);
-    
-    this.state = {
-      name: "",
-      rfid: 0
-    }
-  }
-  
-  createItem = (rfid, name) => {
-    const {createRfid} = this.props;
-    createRfid(rfid, name);
-    this.handleClose();
-  };
-  
-  handleClose() {
-    const { add_modal } = this.props;
-    this.setState({
-      name: "",
-      rfid: 0
-    });
-    add_modal(false);
-  }
-  
+class Alert extends Component {
   render() {
-    const {
-      visible,
-      add_modal,
-    } = this.props;
-    const { rfid, name, } = this.state;
     return (
       <NativeModal
         isVisible={visible}
         onBackdropPress={() => {
-          add_modal(false)
+          alert_modal(false)
         }}
         style={{
           justifyContent: 'center',
@@ -158,15 +120,7 @@ class ModalAdd extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  state,
-});
+Alert.propTypes = {};
+Alert.defaultProps = {};
 
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({
-    add_modal,
-    createRfid,
-  }, dispatch)
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ModalAdd);
+export default Alert;

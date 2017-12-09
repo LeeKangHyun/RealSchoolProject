@@ -1,9 +1,11 @@
 export default function (state = {
   alert: {
     on: false,
+  },
+  add: {
+    on: false,
   }
 }, action) {
-  const { alert } = state;
   switch (action.type) {
     case 'MODAL_ALERT':
       return {
@@ -11,7 +13,12 @@ export default function (state = {
           on: action.on
         }
       };
-      break;
+    case 'MODAL_ADD':
+      return {
+        add: {
+          on: action.on
+        }
+      };
     default:
       return state;
   }
