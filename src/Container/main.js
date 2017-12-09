@@ -7,6 +7,7 @@ import List from '../Component/List';
 import Title from '../Component/Title';
 import IosButton from '../Component/IosButton';
 import ModalAdd from '../Component/modal/ModalAdd';
+import ModalAlert from '../Component/modal/ModalAlert';
 
 import Sensor from '../Component/ble/SensorComponent';
 import BlueTooth from '../Component/ble/Ble';
@@ -46,8 +47,8 @@ class Main extends Component {
             title={"추가"}
             color={"#000"}
             onPress={() => {
-              // Vibration.vibrate([100], true);
-              add_modal(true);
+              // add_modal(true);
+              alert_modal(true);
             }}
           />
         </View>
@@ -68,6 +69,7 @@ class Main extends Component {
           </ScrollView>
         </View>
         <ModalAdd visible={add.on}/>
+        <ModalAlert visible={alert.on}/>
       </View>
     )
   }

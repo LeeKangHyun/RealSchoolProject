@@ -9,12 +9,14 @@ export default function (state = {
   switch (action.type) {
     case 'MODAL_ALERT':
       return {
+        ...state,
         alert: {
           on: action.on
         }
       };
     case 'MODAL_ADD':
       return {
+        ...state,
         add: {
           on: action.on
         }
