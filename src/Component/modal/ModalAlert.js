@@ -89,17 +89,17 @@ class ModalAlert extends Component {
             />
             <Text
               style={{
-                fontSize: 20
+                fontSize: 32
               }}
             >
-              {alert.data.name}이(가)
+              {alert.data.name}
             </Text>
             <Text
               style={{
                 fontSize: 20
               }}
             >
-              도난 당했습니다.
+              을(를) 도난 당했습니다.
             </Text>
           </View>
           <View
