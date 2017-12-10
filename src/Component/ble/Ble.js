@@ -149,53 +149,26 @@ export default class BlueTooth extends Component {
             this.setState({peripherals});
           }
           console.log('Connected to ' + peripheral.id);
-          
-          
-          setTimeout(() => {
-            
-            /* Test read current RSSI value
-            BleManager.retrieveServices(peripheral.id).then((peripheralData) => {
-              console.log('Retrieved peripheral services', peripheralData);
-              BleManager.readRSSI(peripheral.id).then((rssi) => {
-                console.log('Retrieved actual RSSI value', rssi);
-              });
-            });*/
-            
-            // Test using bleno's pizza example
-            // https://github.com/sandeepmistry/bleno/tree/master/examples/pizza
-            BleManager.retrieveServices(peripheral.id).then((peripheralInfo) => {
-              console.log(peripheralInfo);
-              var service = '13333333-3333-3333-3333-333333333337';
-              var bakeCharacteristic = '13333333-3333-3333-3333-333333330003';
-              var crustCharacteristic = '13333333-3333-3333-3333-333333330001';
-              
-              setTimeout(() => {
-                BleManager.startNotification(peripheral.id, service, bakeCharacteristic).then(() => {
-                  console.log('Started notification on ' + peripheral.id);
-                  setTimeout(() => {
-                    BleManager.write(peripheral.id, service, crustCharacteristic, [0]).then(() => {
-                      console.log('Writed NORMAL crust');
-                      BleManager.write(peripheral.id, service, bakeCharacteristic, [1,95]).then(() => {
-                        console.log('Writed 351 temperature, the pizza should be BAKED');
-                        /*
-                        var PizzaBakeResult = {
-                          HALF_BAKED: 0,
-                          BAKED:      1,
-                          CRISPY:     2,
-                          BURNT:      3,
-                          ON_FIRE:    4
-                        };*/
-                      });
-                    });
-                    
-                  }, 500);
-                }).catch((error) => {
-                  console.log('Notification error', error);
+          console.log(p);
+          BleManager.retrieveServices(peripheral.id).then((peripheralInfo) => {
+            console.log(peripheralInfo);
+            // const serviceUUID = peripheralInfo.characteristics[0].service;
+            const serviceUUID = "FFE0";
+            // const charUUID = peripheralInfo.characteristics[0].characteristic;
+            const charUUID = "FFE1";
+            BleManager.startNotification(peripheral.id, serviceUUID, charUUID).then(() => {
+              console.log('Started notification on ' + peripheral.id);
+              BleManager.read(peripheral.id, serviceUUID, charUUID).then((data) => {
+                BleManager.writeWithoutResponse(peripheral.id, serviceUUID, charUUID, data).then(() => {
+                  console.log('Writed NORMAL crust');
                 });
-              }, 200);
+              }).catch(err => {
+                console.log(err);
+              })
+            }).catch((error) => {
+              console.log('Notification error', error);
             });
-            
-          }, 900);
+          });
         }).catch((error) => {
           console.log('Connection error', error);
         });

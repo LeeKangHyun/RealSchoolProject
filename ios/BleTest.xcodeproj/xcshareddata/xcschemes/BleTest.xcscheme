@@ -29,7 +29,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "BleTest.app"
+               BuildableName = "&#x110c;&#x1175;&#x110f;&#x1167;&#x110c;&#x116f;.app"
                BlueprintName = "BleTest"
                ReferencedContainer = "container:BleTest.xcodeproj">
             </BuildableReference>
@@ -72,7 +72,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "BleTest.app"
+            BuildableName = "&#x110c;&#x1175;&#x110f;&#x1167;&#x110c;&#x116f;.app"
             BlueprintName = "BleTest"
             ReferencedContainer = "container:BleTest.xcodeproj">
          </BuildableReference>
@@ -96,7 +96,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "BleTest.app"
+            BuildableName = "&#x110c;&#x1175;&#x110f;&#x1167;&#x110c;&#x116f;.app"
             BlueprintName = "BleTest"
             ReferencedContainer = "container:BleTest.xcodeproj">
          </BuildableReference>
@@ -122,7 +122,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "BleTest.app"
+            BuildableName = "&#x110c;&#x1175;&#x110f;&#x1167;&#x110c;&#x116f;.app"
             BlueprintName = "BleTest"
             ReferencedContainer = "container:BleTest.xcodeproj">
          </BuildableReference>
