@@ -57,7 +57,7 @@ class ModalAlert extends Component {
               volume: volume,
             });
           });
-          SystemSetting.setVolume(0.1);
+          SystemSetting.setVolume(1.0);
           Sound.setCategory('Playback', true);
           whoosh.setNumberOfLoops(-1);
           whoosh.play((success) => {
@@ -89,7 +89,10 @@ class ModalAlert extends Component {
             />
             <Text
               style={{
-                fontSize: 32
+                fontSize: 32,
+                color: '#fff',
+                lineHeight: 48,
+                fontWeight: 'bold',
               }}
             >
               {alert.data.name}
