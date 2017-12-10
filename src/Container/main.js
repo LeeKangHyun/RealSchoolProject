@@ -38,11 +38,11 @@ class Main extends Component {
           나의 물건을 책임져라
         </Title>
         <View style={{
-          flex: 2
+          flex: 3
         }}>
           <BlueTooth />
         </View>
-        <View style={{flex: 7}}>
+        <View style={{flex: 6}}>
           <ScrollView>
             <List
               onChangeItem={changeRfid}
