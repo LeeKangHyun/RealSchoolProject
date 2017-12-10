@@ -57,7 +57,7 @@ class ModalAlert extends Component {
               volume: volume,
             });
           });
-          SystemSetting.setVolume(0.2);
+          SystemSetting.setVolume(0.1);
           Sound.setCategory('Playback', true);
           whoosh.setNumberOfLoops(-1);
           whoosh.play((success) => {

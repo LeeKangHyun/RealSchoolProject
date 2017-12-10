@@ -53,8 +53,6 @@ class BlueTooth extends Component {
     this.handlerDisconnect = bleManagerEmitter.addListener('BleManagerDisconnectPeripheral', this.handleDisconnectedPeripheral );
     this.handlerUpdate = bleManagerEmitter.addListener('BleManagerDidUpdateValueForCharacteristic', this.handleUpdateValueForCharacteristic );
     
-    
-    
     if (Platform.OS === 'android' && Platform.Version >= 23) {
       PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION).then((result) => {
         if (result) {
@@ -74,9 +72,12 @@ class BlueTooth extends Component {
   
   handleAppStateChange(nextAppState) {
     if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+      console.log('포 그라운드 틀어짐');
       BleManager.getConnectedPeripherals([]).then((peripheralsArray) => {
         console.log('연결된 주변 기기: ' + peripheralsArray.length);
       });
+    } else {
+      console.log('백 그라운드 틀어짐');
     }
     this.setState({appState: nextAppState});
   }
@@ -105,23 +106,28 @@ class BlueTooth extends Component {
       alert_modal,
       rfid,
     } = this.props;
-    
-    console.log('데이터 수신 ' + data.peripheral + ' characteristic ' + data.characteristic, data.value);
-    const buffer = Buffer.Buffer.from(data);
-    const sensorData = buffer.readUInt8(1, true);
-    console.log(sensorData);
-    
-    return;
-    
-    for (let key in rfid) {
-      if (rfid.hasOwnProperty(key)) {
-        let obj = rfid[key];
-        if (value === obj.rfid) {
-          return alert_modal(true, obj);
+    // console.log('데이터 수신 ' + data.peripheral + ' characteristic ' + data.characteristic, data.value);
+    const buffer = Buffer.from(data.value);
+    let id = '';
+    for (let char in buffer) {
+      if (buffer.hasOwnProperty(char)) {
+        id += String.fromCharCode(buffer[char]);
+      }
+    }
+    console.log(id);
+    let YNalready = true;
+    for (let key in rfid.blueT) {
+      if (rfid.blueT.hasOwnProperty(key)) {
+        let obj = rfid.blueT[key];
+        if (id === obj.rfid) {
+          YNalready = false;
+          if (obj.state) {
+            alert_modal(true, obj)
+          }
         }
       }
     }
-    add_modal(true, '123123')
+    YNalready && add_modal(true, id);
   }
   
   handleStopScan() {
@@ -148,10 +154,10 @@ class BlueTooth extends Component {
   }
   
   test(peripheral) {
-    if (peripheral){
-      if (peripheral.connected){
+    if (peripheral) {
+      if (peripheral.connected) {
         BleManager.disconnect(peripheral.id);
-      }else{
+      } else {
         BleManager.connect(peripheral.id).then(() => {
           let peripherals = this.state.peripherals;
           let p = peripherals.get(peripheral.id);

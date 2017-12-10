@@ -5,13 +5,11 @@ export default function (state = {
   switch (action.type) {
     case 'RFID_CREATE_ITEM':
       return {
-        ...state,
         blueT: [...blueT, action.obj]
       };
     case 'RFID_CHANGE_ITEM':
     case 'RFID_REMOVE_ITEM':
       return {
-        ...state,
         blueT: [
           ...action.obj
         ]

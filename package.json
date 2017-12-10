@@ -25,6 +25,7 @@
     "react-native-ble-plx": "^0.7.0",
     "react-native-check-box": "^2.0.2",
     "react-native-modal": "^4.1.1",
+    "react-native-push-notification": "^3.0.2",
     "react-native-sound": "^0.10.4",
     "react-native-system-setting": "^1.0.8",
     "react-redux": "^5.0.6",
