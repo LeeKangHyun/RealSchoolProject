@@ -10,13 +10,14 @@ import {
   PermissionsAndroid,
   ListView,
   ScrollView,
-  AppState
+  AppState,
 } from 'react-native';
 import Dimensions from 'Dimensions';
 import BleManager from 'react-native-ble-manager';
 import {Buffer} from 'buffer';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+
 import { changeRfid, createRfid, removeRfid } from '../../Redux/rfid/action';
 import { add_modal, alert_modal } from '../../Redux/modal/action';
 
@@ -101,12 +102,16 @@ class BlueTooth extends Component {
   }
   
   handleUpdateValueForCharacteristic(data) {
+    // console.log('데이터 수신 ' + data.peripheral + ' characteristic ' + data.characteristic, data.value);
+    this.dataHandling(data);
+  }
+  
+  dataHandling = (data) => {
     const {
       add_modal,
       alert_modal,
       rfid,
     } = this.props;
-    // console.log('데이터 수신 ' + data.peripheral + ' characteristic ' + data.characteristic, data.value);
     const buffer = Buffer.from(data.value);
     let id = '';
     for (let char in buffer) {
@@ -128,7 +133,7 @@ class BlueTooth extends Component {
       }
     }
     YNalready && add_modal(true, id);
-  }
+  };
   
   handleStopScan() {
     console.log('스캔 중지');

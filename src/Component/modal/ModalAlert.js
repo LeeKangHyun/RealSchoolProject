@@ -87,8 +87,19 @@ class ModalAlert extends Component {
               source={require('./warning.png')}
               style={{width: 256, height: 256}}
             />
-            <Text>
-              {alert.data.name} 도난 당했습니다.
+            <Text
+              style={{
+                fontSize: 20
+              }}
+            >
+              {alert.data.name}이(가)
+            </Text>
+            <Text
+              style={{
+                fontSize: 20
+              }}
+            >
+              도난 당했습니다.
             </Text>
           </View>
           <View

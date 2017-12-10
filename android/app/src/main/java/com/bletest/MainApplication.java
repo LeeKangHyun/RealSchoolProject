@@ -3,6 +3,7 @@ package com.bletest;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import com.ninty.system.setting.SystemSettingPackage;
 import com.zmxv.RNSound.RNSoundPackage;
 import it.innove.BleManagerPackage;
@@ -27,6 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ReactNativePushNotificationPackage(),
             new SystemSettingPackage(),
             new RNSoundPackage(),
             new BleManagerPackage(),
