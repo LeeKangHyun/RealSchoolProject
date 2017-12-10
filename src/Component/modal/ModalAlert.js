@@ -20,7 +20,12 @@ const whoosh = new Sound('warning.mp3', Sound.MAIN_BUNDLE, (error) => {});
 
 class ModalAlert extends Component {
   static defaultProps = {
-    visible: false
+    visible: false,
+    alert: {
+      rfid: '',
+      name: 'HelloWorld!',
+      state: false
+    }
   };
   
   handleClose = () => {
@@ -34,6 +39,7 @@ class ModalAlert extends Component {
     const {
       visible,
       alert_modal,
+      alert,
     } = this.props;
     return (
       <NativeModal
@@ -46,26 +52,20 @@ class ModalAlert extends Component {
         backdropColor={"#FA1010"}
         backdropOpacity={1}
         onModalShow={() => {
-          // Enable playback in silence mode (iOS only)
-
-          // change the volume
           SystemSetting.getVolume().then((volume)=>{
             this.setState({
               volume: volume,
             });
           });
-          // SystemSetting.setVolume(1.0);
           SystemSetting.setVolume(0.2);
           Sound.setCategory('Playback', true);
           whoosh.setNumberOfLoops(-1);
           whoosh.play((success) => {
-            // Release the audio player resource
             whoosh.release();
           });
           Vibration.vibrate([100], true);
         }}
         onModalHide={() => {
-          // Stop the sound and rewind to the beginning
           whoosh.stop();
           SystemSetting.setVolume(this.state.volume);
           Vibration.cancel();
@@ -87,6 +87,9 @@ class ModalAlert extends Component {
               source={require('./warning.png')}
               style={{width: 256, height: 256}}
             />
+            <Text>
+              {alert.data.name} 도난 당했습니다.
+            </Text>
           </View>
           <View
             style={{
@@ -108,6 +111,7 @@ class ModalAlert extends Component {
 
 const mapStateToProps = (state) => ({
   rfid: state.rfid,
+  alert: state.modal.alert,
 });
 
 const mapDispatchToProps = dispatch => {

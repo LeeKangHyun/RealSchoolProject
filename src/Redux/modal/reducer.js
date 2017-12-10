@@ -1,9 +1,11 @@
 export default function (state = {
   alert: {
     on: false,
+    data: {}
   },
   add: {
     on: false,
+    rfid: '',
   }
 }, action) {
   switch (action.type) {
@@ -11,14 +13,16 @@ export default function (state = {
       return {
         ...state,
         alert: {
-          on: action.on
+          on: action.on,
+          data: action.data,
         }
       };
     case 'MODAL_ADD':
       return {
         ...state,
         add: {
-          on: action.on
+          on: action.on,
+          rfid: action.rfid,
         }
       };
     default:

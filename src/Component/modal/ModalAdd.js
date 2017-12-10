@@ -36,8 +36,7 @@ class ModalAdd extends Component {
   handleClose() {
     const { add_modal } = this.props;
     this.setState({
-      name: "",
-      rfid: 0
+      name: ""
     });
     add_modal(false);
   }
@@ -46,8 +45,9 @@ class ModalAdd extends Component {
     const {
       visible,
       add_modal,
+      add,
     } = this.props;
-    const { rfid, name, } = this.state;
+    const { name, } = this.state;
     return (
       <NativeModal
         isVisible={visible}
@@ -86,18 +86,17 @@ class ModalAdd extends Component {
                 style={{
                 }}
               >
-                RfId :
+                RFid :
               </Text>
               <TextInput
-                onChangeText={(text) => {
-                  this.setState({rfid: +text})
-                }}
                 style={{
                   padding: 3,
                   flex: 1,
                   borderWidth: 1,
                   borderColor: '#efefef'
                 }}
+                editable={false}
+                defaultValue={add.rfid}
               />
             </View>
             <View
@@ -134,7 +133,7 @@ class ModalAdd extends Component {
             }}
           >
             <IosButton
-              onPress={() => {this.createItem(rfid, name)}}
+              onPress={() => {this.createItem(add.rfid, name)}}
               title={"등록"}
               color={"green"}
               style={{
@@ -159,7 +158,7 @@ class ModalAdd extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  state,
+  add: state.modal.add,
 });
 
 const mapDispatchToProps = dispatch => {

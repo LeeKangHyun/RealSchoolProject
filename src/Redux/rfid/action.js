@@ -12,7 +12,7 @@ export function createRfid(rfid, name, state = true) {
         if (blueT.hasOwnProperty(key)) {
           let obj = blueT[key];
           if (rfid === obj.rfid) {
-            reject();
+            throw new Error('Exist rfid');
           }
         }
       }

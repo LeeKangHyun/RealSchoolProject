@@ -1,13 +1,15 @@
-export function alert_modal(on = false) {
+export function alert_modal(on = false, data = {}) {
   return {
     type: 'MODAL_ALERT',
-    on: on
+    on: on,
+    data: data,
   }
 }
 
-export function add_modal(on = false) {
+export function add_modal(on = false, rfid = '') {
   return {
     type: 'MODAL_ADD',
-    on: on
+    on: on,
+    rfid: rfid,
   }
 }
