@@ -37,29 +37,12 @@ class Main extends Component {
         <Title>
           나의 물건을 책임져라
         </Title>
-        
         <View style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-          <IosButton
-            title={"추가"}
-            color={"#000"}
-            onPress={() => {
-              // add_modal(true);
-              alert_modal(true);
-            }}
-          />
-        </View>
-        
-        <View style={{
-          flex: 5
+          flex: 2
         }}>
           <BlueTooth />
         </View>
-        
-        <View style={{flex: 4}}>
+        <View style={{flex: 7}}>
           <ScrollView>
             <List
               onChangeItem={changeRfid}

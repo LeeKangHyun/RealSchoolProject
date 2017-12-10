@@ -110,6 +110,9 @@ export default class BlueTooth extends Component {
   
   handleUpdateValueForCharacteristic(data) {
     console.log('데이터 수신 ' + data.peripheral + ' characteristic ' + data.characteristic, data.value);
+    const buffer = Buffer.Buffer.from(data);
+    const sensorData = buffer.readUInt8(1, true);
+    console.log(sensorData);
   }
   
   handleStopScan() {
@@ -152,16 +155,15 @@ export default class BlueTooth extends Component {
           console.log(p);
           BleManager.retrieveServices(peripheral.id).then((peripheralInfo) => {
             console.log(peripheralInfo);
-            // const serviceUUID = peripheralInfo.characteristics[0].service;
-            const serviceUUID = "FFE0";
-            // const charUUID = peripheralInfo.characteristics[0].characteristic;
-            const charUUID = "FFE1";
+            const serviceUUID = peripheralInfo.characteristics[0].service;
+            // const serviceUUID = "FFE0";
+            const charUUID = peripheralInfo.characteristics[0].characteristic;
+            // const charUUID = "FFE1";
+            
+            console.log(serviceUUID, charUUID);
             BleManager.startNotification(peripheral.id, serviceUUID, charUUID).then(() => {
               console.log('Started notification on ' + peripheral.id);
-              BleManager.read(peripheral.id, serviceUUID, charUUID).then((data) => {
-                BleManager.writeWithoutResponse(peripheral.id, serviceUUID, charUUID, data).then(() => {
-                  console.log('Writed NORMAL crust');
-                });
+              BleManager.read(peripheral.id, serviceUUID, charUUID).then((readData) => {
               }).catch(err => {
                 console.log(err);
               })
@@ -216,13 +218,18 @@ export default class BlueTooth extends Component {
     
     return (
       <View style={styles.container}>
-        <TouchableHighlight style={{marginTop: 40,margin: 20, padding:20, backgroundColor:'#ccc'}} onPress={() => this.startScan() }>
+        <TouchableHighlight
+          style={{margin: 12, padding: 12, backgroundColor:'#ccc'}}
+          onPress={() => this.startScan() }
+        >
           <Text>블루투스 스캔중 ({this.state.scanning ? '실행 중' : '꺼짐'})</Text>
         </TouchableHighlight>
-        <ScrollView style={styles.scroll}>
+        <ScrollView
+          style={styles.scroll}
+        >
           {(list.length === 0) &&
-            <View style={{flex:1, margin: 20}}>
-              <Text style={{textAlign: 'center'}}>주변 기기 없음</Text>
+            <View style={{flex:1, margin: 12,}}>
+              <Text style={{textAlign: 'center', flex: 1}}>주변 기기 없음</Text>
             </View>
           }
           <ListView
